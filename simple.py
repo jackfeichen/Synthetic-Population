@@ -39,7 +39,6 @@ def run(choices, n, m, seed):
 
 def replace1(alg, choices, p, seed):
     # now replace the first p "people", 1 at a time
-    rnd = random.Random(seed)
     for i in range(p):
         alg.removeAt(i)
         alg.generate()
@@ -70,9 +69,9 @@ def main():
     seed = 1000
     choices = list(it.product([0,1], repeat=m))
 ##    alg = test(choices, n, m, seed)
-    alg = test_random(choices, n, m, seed)
-##    alg = timed(lambda:run(choices, n, m, seed))
-##    replace1(alg, choices, 100, seed)
+##    alg = test_random(choices, n, m, seed)
+    alg = timed(lambda:run(choices, n, m, seed))
+    replace1(alg, choices, 100, seed)
 
 if __name__ == '__main__':
     os.chdir('d:/CMU/Summer.2011/dev/attr2')

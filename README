@@ -1,0 +1,25 @@
+This project is part of my independent study project into generating synthetic populations to be used as a dataset that preserves the privacy of the underlying population it emulates.
+
+Online Algorithm
+----------------
+Initialization: 
+* build a default population and evaluate the marginals and interaction ratio (odds ratio)
+* record this information as the basis for marginal and interaction calculations for the online algorithm. This serves both as a way to generate the expected values as well as show that there is a real population that fits this criteria.
+
+Setup:
+* generate a list of 2^10 (1024) possible combinations of 10 binary attributes
+
+Generate and Analyze:
+* first, generate all possible incremental values and its effect on both the marginal error (10*2 posibilities) and interaction error (10 choose 2 possibilities). This is then stored into a lookup table keyed by the marginals (indexes) and interaction pairs (tuples of i,j values).
+* next, each choice of the 1024 possible combinations then match up their values with the memoized lookup and an error value is determined for that choice.
+** for marginals, this is a simple indicator function: I(c)/N
+** for interactions, this is simply the determinant for a 2x2 matrix, we use a logistic calculation to smooth out extreme values. 0s are substituted with a small value.
+
+Update:
+* the iteration above tracks the lowest error rate of a generation and then adds that choice greedily to the underlying population.
+
+Iterate:
+* the generate, analyze and update steps are repeated to geneate a population size of 1000.
+
+Substitue and reanalyze:
+* the first 100 choices within the population are removed, 1 at a time, and the algorithm is rerun to add in a new, optimal selection.
